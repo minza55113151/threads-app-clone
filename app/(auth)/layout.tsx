@@ -23,7 +23,11 @@ export default function RootLayout({
       }}
     >
       <html lang="en">
-        <body className={`${inter.className} bg-dark-1`}>{children}</body>
+        <body
+          className={`flex items-center justify-center w-screen h-screen ${inter.className} bg-dark-1`}
+        >
+          {children}
+        </body>
       </html>
     </ClerkProvider>
   );
