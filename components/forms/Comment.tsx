@@ -17,7 +17,7 @@ import * as z from "zod";
 import { Textarea } from "../ui/textarea";
 import { usePathname, useRouter } from "next/navigation";
 import { CommentValidation, ThreadValidation } from "@/lib/validations/thread";
-import { addCommentToThread, createThread } from "@/lib/actions/thread.action";
+import { addCommentToThread, createThread } from "@/lib/actions/thread.actions";
 import Image from "next/image";
 
 interface Props {
@@ -39,7 +39,7 @@ const Comment = ({ threadId, currentUserImg, currentUserId }: Props) => {
 
   const onSubmit = async (values: z.infer<typeof CommentValidation>) => {
     await addCommentToThread(
-      threadId,
+      JSON.parse(threadId),
       values.thread,
       JSON.parse(currentUserId),
       pathname

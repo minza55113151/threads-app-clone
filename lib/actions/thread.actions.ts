@@ -1,8 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import Thread from "../modals/thread.modal";
-import User from "../modals/user.modal";
+import Thread from "../models/thread.model";
+import User from "../models/user.model";
 import { connectToDB } from "../mongoose";
 
 interface Params {
@@ -138,30 +138,5 @@ export async function addCommentToThread(
     originalThread.save();
   } catch (error: any) {
     throw new Error(`Error adding ocmment to thread: ${error.message}`);
-  }
-}
-
-export async function fetchUserPosts(userId: string) {
-  try {
-    connectToDB();
-
-    // TODO: Populate community
-    const threads = await User.findOne({ id: userId }).populate({
-      path: "threads",
-      model: Thread,
-      populate: {
-        path: "children",
-        model: Thread,
-        populate: {
-          path: "author",
-          model: User,
-          select: "name image id",
-        },
-      },
-    });
-
-    return threads;
-  } catch (error: any) {
-    throw new Error(`Error fetching user posts: ${error.message}`);
   }
 }
